@@ -93,6 +93,34 @@ npm install quill-image-extend-module --save-dev
                      }
                  }
 ```
+### 注意事项 （matters need attention）
+由于不同的用户的服务器返回的数据格式不尽相同
+
+因此
+在配置中，你必须如下操作
+```vue
+ // 你必须把返回的数据中所包含的图片地址 return 回去
+ respnse: (res) => {
+    return respnse.info  // 这里切记要return回你的图片地址
+ }
+```
+比如你的服务器返回的成功数据为
+```vue
+{
+code: 200,
+starus: true,
+result: {
+    img: 'http://placehold.it/100x100' // 服务器返回的数据中的图片的地址
+ }
+}
+```
+那么你应该在参数中写为：
+```vue
+ // 你必须把返回的数据中所包含的图片地址 return 回去
+ respnse: (res) => {
+    return respnse.result.img  // 这里切记要return回你的图片地址
+ }
+```
 
 ## 与其他模块一起使用（以resize-module为例子）
 ```ecmascript 6
