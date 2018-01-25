@@ -1,4 +1,4 @@
-# quill-image-extend-module (如果觉得还不错，请右上角点击下星星满足作者的虚荣心吧，哈哈)
+# quill-image-extend-module 
 vue-quill-editor的增强模块，提供图片上传到服务器，复制插入，拖拽插入，支持与其他模块一起使用
 
 ## Install
@@ -182,6 +182,7 @@ result: {
 
 
 
+## (如果觉得还不错，请右上角点击下星星满足作者的虚荣心吧，哈哈)
 
 
 
