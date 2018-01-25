@@ -1,0 +1,15 @@
+.quill-loading {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.6);
+}
+.extend-upload-success {
+    display: none;
+}
+.extend-upload-warning-color {
+    color: red;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "quill-image-extend-module",
+  "version": "1.0.0",
+  "description": "plugin for vue-quill-editor to upload image",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NextBoy/quill-image-extend-module.git"
+  },
+  "keywords": [
+    "quill",
+    "quill-upload",
+    "quill-image",
+    "drop"
+  ],
+  "author": "nextboy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NextBoy/quill-image-extend-module/issues"
+  },
+  "homepage": "https://github.com/NextBoy/quill-image-extend-module#readme"
+}
