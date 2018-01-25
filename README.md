@@ -7,6 +7,13 @@ npm install quill-image-extend-module --save-dev
 ```
 ## use
 ```ecmascript 6
+  import {quillEditor, Quill} from 'vue-quill-editor'
+  import {container, ImageExtend} from 'quill-image-extend-module'
+
+  Quill.register('modules/ImageExtend', ImageExtend)
+```
+## example
+```ecmascript 6
 <template>
   <div class="quill-wrap">
     <quill-editor
