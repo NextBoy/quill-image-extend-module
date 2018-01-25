@@ -101,7 +101,7 @@ npm install quill-image-extend-module --save-dev
 ```vue
  // 你必须把返回的数据中所包含的图片地址 return 回去
  respnse: (res) => {
-    return respnse.info  // 这里切记要return回你的图片地址
+    return res.info  // 这里切记要return回你的图片地址
  }
 ```
 比如你的服务器返回的成功数据为
@@ -118,7 +118,7 @@ result: {
 ```vue
  // 你必须把返回的数据中所包含的图片地址 return 回去
  respnse: (res) => {
-    return respnse.result.img  // 这里切记要return回你的图片地址
+    return res.result.img  // 这里切记要return回你的图片地址
  }
 ```
 
