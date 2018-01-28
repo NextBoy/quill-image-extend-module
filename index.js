@@ -174,8 +174,14 @@ export class ImageExtend {
                 let res = JSON.parse(xhr.responseText)
                 self.imgURL = config.response(res)
                 self.insertImg()
+                if (self.config.success) {
+                    self.config.success()
+                }
             } else {
                 self.quill.root.innerHTML = self.quill.root.innerHTML.replace('[uploading...]', '[upload error]')
+                if (self.config.error) {
+                    self.config.error()
+                }
             }
         }
         // 开始上传数据

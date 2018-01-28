@@ -93,7 +93,8 @@ npm install quill-image-extend-module --save-dev
                              headers: (xhr) => {},  // 可选参数 设置请求头部
                              start: () => {},  // 可选参数 自定义开始上传触发事件
                              end: () => {},  // 可选参数 自定义上传结束触发的事件，无论成功或者失败
-                             error: () => {},  // 可选参数 自定义网络错误触发的事件
+                             error: () => {},  // 可选参数 上传失败触发的事件
+                             success: () => {},  // 可选参数  上传成功触发的事件
                              change: (xhr, formData) => {} // 可选参数 选择图片触发，也可用来设置头部，但比headers多了一个参数，可设置formData
                          },
                          toolbar: {
