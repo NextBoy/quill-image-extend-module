@@ -10,7 +10,7 @@
 </template>
 <script>
     import {quillEditor, Quill} from 'vue-quill-editor'
-    import {container, ImageExtend} from 'quill-image-extend-module'
+    import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
 
     Quill.register('modules/ImageExtend', ImageExtend)
     export default {
@@ -42,7 +42,7 @@
                             container: container,  // container为工具栏，此次引入了全部工具栏，也可自行配置
                             handlers: {
                                 'image': function () {  // 劫持原来的图片点击按钮事件
-                                    document.querySelector('.quill-image-input').click()
+                                    QuillWatch.emit(this.quill.id)
                                 }
                             }
                         }
