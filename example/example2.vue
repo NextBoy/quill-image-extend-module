@@ -10,7 +10,7 @@
 </template>
 <script>
   import {quillEditor, Quill} from 'vue-quill-editor'
-  import {container, ImageExtend} from 'quill-image-extend-module'
+  import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
   import ImageResize from 'quill-image-resize-module'
 
   Quill.register('modules/ImageExtend', ImageExtend)
@@ -40,7 +40,7 @@
               container: container,
               handlers: {
                 'image': function () {
-                  document.querySelector('.quill-image-input').click()
+                    QuillWatch.emit(this.quill.id)
                 }
               }
             }

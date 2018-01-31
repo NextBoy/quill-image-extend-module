@@ -9,6 +9,13 @@ vue-quill-editor的增强模块，
  - 显示上传成功或者失败
  - 支持与其他模块一起使用（例如调整图片大小）
 
+## 更新情况
+ - version 1.1
+   - 增加上传显示文字样式
+   - 增加图片超过自定义大小的回调 sizeError
+   - 修复同一页面多个富文本编辑器上传图片只能插入第一个编辑器的bug
+   - 引入QuillWatch 全局监听多个富文本编辑器
+
 ## Install
 ```bash
 npm install quill-image-extend-module --save-dev
@@ -16,7 +23,7 @@ npm install quill-image-extend-module --save-dev
 ## use
 ```ecmascript 6
   import {quillEditor, Quill} from 'vue-quill-editor'
-  import {container, ImageExtend} from 'quill-image-extend-module'
+  import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
 
   Quill.register('modules/ImageExtend', ImageExtend)
 ```
@@ -34,7 +41,7 @@ npm install quill-image-extend-module --save-dev
 </template>
 <script>
   import {quillEditor, Quill} from 'vue-quill-editor'
-  import {container, ImageExtend} from 'quill-image-extend-module'
+  import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
 
   Quill.register('modules/ImageExtend', ImageExtend)
   export default {
@@ -57,7 +64,7 @@ npm install quill-image-extend-module --save-dev
               container: container,
               handlers: {
                 'image': function () {
-                  document.querySelector('.quill-image-input').click()
+                  QuillWatch.emit(this.quill.id)
                 }
               }
             }
@@ -85,16 +92,18 @@ npm install quill-image-extend-module --save-dev
                                  return res.info
                              },
                              headers: (xhr) => {},  // 可选参数 设置请求头部
+                             sizeError: () => {},  // 图片超过大小的回调
                              start: () => {},  // 可选参数 自定义开始上传触发事件
                              end: () => {},  // 可选参数 自定义上传结束触发的事件，无论成功或者失败
-                             error: () => {},  // 可选参数 自定义网络错误触发的事件
+                             error: () => {},  // 可选参数 上传失败触发的事件
+                             success: () => {},  // 可选参数  上传成功触发的事件
                              change: (xhr, formData) => {} // 可选参数 选择图片触发，也可用来设置头部，但比headers多了一个参数，可设置formData
                          },
                          toolbar: {
                              container: container,  // container为工具栏，此次引入了全部工具栏，也可自行配置
                              handlers: {
                                  'image': function () {  // 劫持原来的图片点击按钮事件
-                                     document.querySelector('.quill-image-input').click()
+                                     QuillWatch.emit(this.quill.id)
                                  }
                              }
                          }
@@ -144,7 +153,7 @@ result: {
 </template>
 <script>
   import {quillEditor, Quill} from 'vue-quill-editor'
-  import {container, ImageExtend} from 'quill-image-extend-module'
+  import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
   import ImageResize from 'quill-image-resize-module'
 
   Quill.register('modules/ImageExtend', ImageExtend)
@@ -174,7 +183,7 @@ result: {
               container: container,
               handlers: {
                 'image': function () {
-                  document.querySelector('.quill-image-input').click()
+                  QuillWatch.emit(this.quill.id)
                 }
               }
             }
@@ -190,7 +199,7 @@ result: {
 
 
 
-## (如果觉得还不错，请右上角点击下星星满足作者的虚荣心吧，哈哈)
+## (如果觉得还不错，请右上角点击下星星，此致敬礼)
 
 
 
