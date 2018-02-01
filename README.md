@@ -50,7 +50,7 @@ npm install quill-image-extend-module --save-dev
       return {
        content: '',
         // 富文本框参数设置
-        editorOption: {
+        editorOption: {  
           modules: {
             ImageExtend: {
               loading: true,
@@ -80,8 +80,7 @@ npm install quill-image-extend-module --save-dev
 ```ecmascript 6
  editorOption: {
                      modules: {
-                         ImageExtend: {
-                             loading: true,  // 可选参数 是否显示上传进度和提示语
+                         ImageExtend: {  // 如果不作设置，即{}  则依然开启复制粘贴功能且以base64插入 
                              name: 'img',  // 图片参数名
                              size: 3,  // 可选参数 图片大小，单位为M，1M = 1024kb
                              action: updateUrl,  // 服务器地址, 如果action为空，则采用base64插入图片
@@ -99,8 +98,8 @@ npm install quill-image-extend-module --save-dev
                              success: () => {},  // 可选参数  上传成功触发的事件
                              change: (xhr, formData) => {} // 可选参数 选择图片触发，也可用来设置头部，但比headers多了一个参数，可设置formData
                          },
-                         toolbar: {
-                             container: container,  // container为工具栏，此次引入了全部工具栏，也可自行配置
+                         toolbar: {  // 如果不上传图片到服务器，此处不必配置
+                             container: container,  // container为工具栏，此次引入了全部工具栏，也可自行配置
                              handlers: {
                                  'image': function () {  // 劫持原来的图片点击按钮事件
                                      QuillWatch.emit(this.quill.id)
@@ -169,7 +168,6 @@ result: {
           modules: {
             ImageResize: {},
             ImageExtend: {
-              loading: true,
               name: 'img',
               size: 2,  // 单位为M, 1M = 1024KB
               action: updateUrl,
