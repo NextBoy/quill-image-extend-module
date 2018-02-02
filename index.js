@@ -143,26 +143,24 @@ export class ImageExtend {
         if (config.change) {
             config.change(xhr, formData)
         }
-        xhr.onload = function (e) {
-            if (self.config.loading) {
-                setTimeout(function () {
-                }, 1000)
-            }
-            if (xhr.status === 200) {
-                // self.quill.root.innerHTML = self.quill.root.innerHTML.replace('[uploading...]', '')
-                let res = JSON.parse(xhr.responseText)
-                self.imgURL = config.response(res)
-                QuillWatch.active.uploadSuccess()
-                self.insertImg()
-                if (self.config.success) {
-                    self.config.success()
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    //success
+                    let res = JSON.parse(xhr.responseText)
+                    self.imgURL = config.response(res)
+                    QuillWatch.active.uploadSuccess()
+                    self.insertImg()
+                    if (self.config.success) {
+                        self.config.success()
+                    }
+                } else {
+                    //error
+                    if (self.config.error) {
+                        self.config.error()
+                    }
+                    QuillWatch.active.uploadError()
                 }
-            } else {
-                // self.quill.root.innerHTML = self.quill.root.innerHTML.replace('[uploading...]', '[upload error]')
-                if (self.config.error) {
-                    self.config.error()
-                }
-                QuillWatch.active.uploadError()
             }
         }
         // 开始上传数据
