@@ -90,13 +90,18 @@ npm install quill-image-extend-module --save-dev
                              response: (res) => {
                                  return res.info
                              },
-                             headers: (xhr) => {},  // 可选参数 设置请求头部
+                             headers: (xhr) => {
+                             // xhr.setRequestHeader('myHeader','myValue')
+                             },  // 可选参数 设置请求头部
                              sizeError: () => {},  // 图片超过大小的回调
                              start: () => {},  // 可选参数 自定义开始上传触发事件
                              end: () => {},  // 可选参数 自定义上传结束触发的事件，无论成功或者失败
                              error: () => {},  // 可选参数 上传失败触发的事件
                              success: () => {},  // 可选参数  上传成功触发的事件
-                             change: (xhr, formData) => {} // 可选参数 每次选择图片触发，也可用来设置头部，但比headers多了一个参数，可设置formData
+                             change: (xhr, formData) => {
+                             // xhr.setRequestHeader('myHeader','myValue')
+                             // formData.append('token', 'myToken')
+                             } // 可选参数 每次选择图片触发，也可用来设置头部，但比headers多了一个参数，可设置formData
                          },
                          toolbar: {  // 如果不上传图片到服务器，此处不必配置
                              container: container,  // container为工具栏，此次引入了全部工具栏，也可自行配置
