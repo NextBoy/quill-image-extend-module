@@ -9,9 +9,11 @@ export const QuillWatch = {
             this.watcher[imageExtendId] = ImageExtend
         }
     },
-    emit: function (activeId) {  // 事件发射触发
+    emit: function (activeId, type = 1) {  // 事件发射触发
         this.active = this.watcher[activeId]
-        imgHandler()
+        if (type === 1) {
+            imgHandler()
+        }
     }
 }
 
@@ -36,7 +38,7 @@ export class ImageExtend {
         quill.root.addEventListener('dropover', function (e) {
             e.preventDefault()
         }, false)
-
+        this.cursorIndex = 0
         QuillWatch.on(this.id, this)
     }
 
@@ -45,6 +47,8 @@ export class ImageExtend {
      * @param e
      */
     pasteHandle(e) {
+        // e.preventDefault()
+        QuillWatch.emit(this.quill.id, 0)
         let clipboardData = e.clipboardData
         let i = 0
         let items, item, types
@@ -75,9 +79,9 @@ export class ImageExtend {
                     return
                 }
                 if (this.config.action) {
-                    this.uploadImg()
+                    // this.uploadImg()
                 } else {
-                    this.toBase64()
+                    // this.toBase64()
                 }
             }
         }
@@ -88,6 +92,7 @@ export class ImageExtend {
      * @param e
      */
     dropHandle(e) {
+        QuillWatch.emit(this.quill.id, 0)
         const self = this
         e.preventDefault()
         // 如果图片限制大小
@@ -143,7 +148,7 @@ export class ImageExtend {
         if (config.change) {
             config.change(xhr, formData)
         }
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     //success
@@ -197,10 +202,10 @@ export class ImageExtend {
      * @description 往富文本编辑器插入图片
      */
     insertImg() {
-        const self = this
-        let length = (this.quill.getSelection(true) || {}).index || this.quill.getLength()
-        self.quill.insertEmbed(length, 'image', self.imgURL)
-        self.quill.setSelection(length + 1)
+        const self = QuillWatch.active
+        self.quill.insertEmbed(QuillWatch.active.cursorIndex, 'image', self.imgURL)
+        self.quill.update()
+        self.quill.setSelection(self.cursorIndex+1);
     }
 
     /**
@@ -217,7 +222,8 @@ export class ImageExtend {
      */
     uploading() {
         let length = (QuillWatch.active.quill.getSelection() || {}).index || QuillWatch.active.quill.getLength()
-        QuillWatch.active.quill.insertText(length, '[uploading...]', {'color': 'red'}, true)
+        QuillWatch.active.cursorIndex = length
+        QuillWatch.active.quill.insertText(QuillWatch.active.cursorIndex, '[uploading...]', {'color': 'red'}, true)
     }
 
     /**
