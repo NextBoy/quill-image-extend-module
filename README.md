@@ -1,6 +1,9 @@
 # quill-image-extend-module 
 vue-quill-editor的增强模块，
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/ad2acf261732feb1b2d4/maintainability)](https://codeclimate.com/github/amoshydra/quill-image-extend-module/maintainability)
+[![Known Vulnerabilities](https://snyk.io/test/github/amoshydra/quill-image-extend-module-2/badge.svg)](https://snyk.io/test/github/amoshydra/quill-image-extend-module-2)
+
 功能：
  - 提供图片上传到服务器的功能
  - 复制插入
