@@ -61,9 +61,9 @@ export class ImageExtend {
                     return
                 }
                 if (this.config.action) {
-                    // this.uploadImg()
+                    this.uploadImg()
                 } else {
-                    // this.toBase64()
+                    this.toBase64()
                 }
             }
         }
