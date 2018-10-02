@@ -1,22 +1,4 @@
-/**
- *@description 观察者模式 全局监听富文本编辑器
- */
-export const QuillWatch = {
-    watcher: {},  // 登记编辑器信息
-    active: null,  // 当前触发的编辑器
-    on: function (imageExtendId, ImageExtend) {  // 登记注册使用了ImageEXtend的编辑器
-        if (!this.watcher[imageExtendId]) {
-            this.watcher[imageExtendId] = ImageExtend
-        }
-    },
-    emit: function (activeId, type = 1) {  // 事件发射触发
-        this.active = this.watcher[activeId]
-        if (type === 1) {
-            imgHandler()
-        }
-    }
-}
-
+import {QuillWatch} from './QuillWatch'
 /**
  * @description 图片功能拓展： 增加上传 拖动 复制
  */
@@ -79,9 +61,9 @@ export class ImageExtend {
                     return
                 }
                 if (this.config.action) {
-                    // this.uploadImg()
+                    this.uploadImg()
                 } else {
-                    // this.toBase64()
+                    this.toBase64()
                 }
             }
         }
@@ -157,12 +139,12 @@ export class ImageExtend {
                     QuillWatch.active.uploadSuccess()
                     self.insertImg()
                     if (self.config.success) {
-                        self.config.success()
+                        self.config.success(xhr)
                     }
                 } else {
                     //error
                     if (self.config.error) {
-                        self.config.error()
+                        self.config.error(xhr)
                     }
                     QuillWatch.active.uploadError()
                 }
@@ -174,7 +156,7 @@ export class ImageExtend {
             // let length = (self.quill.getSelection() || {}).index || self.quill.getLength()
             // self.quill.insertText(length, '[uploading...]', { 'color': 'red'}, true)
             if (config.start) {
-                config.start()
+                config.start(xhr)
             }
         }
         // 上传过程
@@ -186,13 +168,13 @@ export class ImageExtend {
         xhr.upload.onerror = function (e) {
             QuillWatch.active.uploadError()
             if (config.error) {
-                config.error()
+                config.error(xhr)
             }
         }
         // 上传数据完成（成功或者失败）时会触发
         xhr.upload.onloadend = function (e) {
             if (config.end) {
-                config.end()
+                config.end(xhr)
             }
         }
         xhr.send(formData)
@@ -239,59 +221,3 @@ export class ImageExtend {
             = QuillWatch.active.quill.root.innerHTML.replace(/\[uploading.*?\]/, '')
     }
 }
-
-/**
- * @description 点击图片上传
- */
-export function imgHandler() {
-    let fileInput = document.querySelector('.quill-image-input');
-    if (fileInput === null) {
-        fileInput = document.createElement('input');
-        fileInput.setAttribute('type', 'file');
-        fileInput.classList.add('quill-image-input');
-        fileInput.style.display = 'none'
-        // 监听选择文件
-        fileInput.addEventListener('change', function () {
-            let self = QuillWatch.active
-            self.file = fileInput.files[0]
-            fileInput.value = ''
-            // 如果图片限制大小
-            if (self.config.size && self.file.size >= self.config.size * 1024 * 1024) {
-                if (self.config.sizeError) {
-                    self.config.sizeError()
-                }
-                return
-            }
-            if (self.config.action) {
-                self.uploadImg()
-            } else {
-                self.toBase64()
-            }
-        })
-        document.body.appendChild(fileInput);
-    }
-    fileInput.click();
-}
-
-/**
- *@description 全部工具栏
- */
-export const container = [
-    ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote', 'code-block'],
-    [{'header': 1}, {'header': 2}],
-    [{'list': 'ordered'}, {'list': 'bullet'}],
-    [{'script': 'sub'}, {'script': 'super'}],
-    [{'indent': '-1'}, {'indent': '+1'}],
-    [{'direction': 'rtl'}],
-    [{'size': ['small', false, 'large', 'huge']}],
-    [{'header': [1, 2, 3, 4, 5, 6, false]}],
-    [{'color': []}, {'background': []}],
-    [{'font': []}],
-    [{'align': []}],
-    ['clean'],
-    ['link', 'image', 'video']
-]
-
-
-
