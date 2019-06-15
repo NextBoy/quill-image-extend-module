@@ -1,5 +1,4 @@
 sorry everyone, 由于作者自身原因，没有精力和时间处理issues,该插件已经不做维护了，希望大家见谅。
-如果有想要接手的可以联系我，微信zz920026184。
 # quill-image-extend-module 
 vue-quill-editor的增强模块，
 
