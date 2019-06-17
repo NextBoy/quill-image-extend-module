@@ -221,7 +221,7 @@ export class ImageExtend {
      * 开始上传
      */
     uploading() {
-        let length = (QuillWatch.active.quill.getSelection() || {}).index || QuillWatch.active.quill.getLength()
+        let length = (QuillWatch.active.quill.getSelection() || {}).index || QuillWatch.active.quill.selection.savedRange.index
         QuillWatch.active.cursorIndex = length
         QuillWatch.active.quill.insertText(QuillWatch.active.cursorIndex, '[uploading...]', {'color': 'red'}, true)
     }
