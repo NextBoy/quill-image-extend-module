@@ -2,8 +2,10 @@
   "name": "quill-image-extend-module",
   "version": "1.1.2",
   "description": "plugin for vue-quill-editor to upload image",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,5 +23,14 @@
   "bugs": {
     "url": "https://github.com/NextBoy/quill-image-extend-module/issues"
   },
-  "homepage": "https://github.com/NextBoy/quill-image-extend-module#readme"
+  "homepage": "https://github.com/NextBoy/quill-image-extend-module#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.4",
+    "cross-env": "^5.2.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.9"
+  }
 }
