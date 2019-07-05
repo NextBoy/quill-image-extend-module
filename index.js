@@ -79,9 +79,9 @@ export class ImageExtend {
                     return
                 }
                 if (this.config.action) {
-                    // this.uploadImg()
+                    this.uploadImg()
                 } else {
-                    // this.toBase64()
+                    this.toBase64()
                 }
             }
         }
@@ -150,7 +150,7 @@ export class ImageExtend {
         }
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
+                if (xhr.status >= 200 && xhr.status < 300) {
                     //success
                     let res = JSON.parse(xhr.responseText)
                     self.imgURL = config.response(res)

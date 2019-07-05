@@ -151,7 +151,7 @@ export class ImageExtend {
                     quillLoading.classList.add('extend-upload-success')
                 }, 1000)
             }
-            if (xhr.status === 200) {
+            if (xhr.status >= 200 && xhr.status < 300) {
                 self.quill.root.innerHTML = self.quill.root.innerHTML.replace('[uploading...]', '')
                 let res = JSON.parse(xhr.responseText)
                 self.imgURL = config.response(res)
