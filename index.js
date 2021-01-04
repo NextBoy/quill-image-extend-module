@@ -78,10 +78,16 @@ export class ImageExtend {
                     }
                     return
                 }
-                if (this.config.action) {
-                    // this.uploadImg()
-                } else {
-                    // this.toBase64()
+                // 解决谷歌浏览器复制粘贴问题
+                let userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+                let isChrome = userAgent.indexOf("Chrome") > -1
+                        && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
+                if(isChrome){
+                    if (this.config.action) {
+                        this.uploadImg()
+                    } else {
+                        this.toBase64()
+                    }
                 }
             }
         }
