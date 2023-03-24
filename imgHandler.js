@@ -25,7 +25,9 @@ export function imgHandler() {
                 }, 1500)
                 return
             }
-            if (self.config.action) {
+            if (self.config.useCustomUpload && self.config.customUploadHandler) {
+                self.config.customUploadHandler(self.file)
+            } else if (self.config.action) {
                 self.uploadImg(self.config.change)
             } else {
                 self.toBase64()

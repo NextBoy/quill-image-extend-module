@@ -47,7 +47,7 @@ export class ImageExtend {
      * @param e
      */
     pasteHandle(e) {
-        // e.preventDefault()
+        e.preventDefault()
         QuillWatch.emit(this.quill.id, 0)
         let clipboardData = e.clipboardData
         let i = 0
@@ -78,11 +78,24 @@ export class ImageExtend {
                     }
                     return
                 }
-                if (this.config.action) {
-                    // this.uploadImg()
+                if (this.config.useCustomUpload && this.config.customUploadHandler) {
+                    this.config.customUploadHandler(self.file)
+                } else if (this.config.action) {
+                    this.uploadImg()
                 } else {
-                    // this.toBase64()
+                    this.toBase64()
                 }
+            }
+            if (item && item.kind === "string" && ["text/plain", "text/html"].indexOf(item.types)) {
+                //将粘贴的文本内容插入到编辑器中
+                item.getAsString(function(s) {
+                    const self = QuillWatch.active;
+                    let length = self.quill.getSelection(true).index;
+                    self.cursorIndex = length;
+                    self.quill.insertText(QuillWatch.active.cursorIndex, s.replace(/\s{2,}/g, "\n"));
+                    self.quill.update();
+                    setTimeout(() => self.quill.setSelection(self.cursorIndex + s.length, 0), 0);
+                });
             }
         }
     }
@@ -103,7 +116,9 @@ export class ImageExtend {
             return
         }
         self.file = e.dataTransfer.files[0]; // 获取到第一个上传的文件对象
-        if (this.config.action) {
+        if (self.config.useCustomUpload && self.config.customUploadHandler) {
+            self.config.customUploadHandler(self.file)
+        } else if (this.config.action) {
             self.uploadImg()
         } else {
             self.toBase64()
@@ -262,7 +277,9 @@ export function imgHandler() {
                 }
                 return
             }
-            if (self.config.action) {
+            if (self.config.useCustomUpload && self.config.customUploadHandler) {
+                self.config.customUploadHandler(self.file)
+            } else if (self.config.action) {
                 self.uploadImg()
             } else {
                 self.toBase64()

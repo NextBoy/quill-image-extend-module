@@ -26,14 +26,10 @@
           modules: {
             ImageResize: {},
             ImageExtend: {
-              loading: true,
-              name: 'img',
-              size: 2,  // 单位为M, 1M = 1024KB
-              action: updateUrl,
-              headers: (xhr) => {
-              },
-              response: (res) => {
-                return res.info
+              useCustomUpload: true,  // 可选参数 是否使用自定义上传，如果为true，则不会使用quill自带的上传方法
+              customUploadHandler: (file) => { // 可选参数 自定义上传方法，如果useCustomUpload为true，则必须设置此参数
+                // file为上传的图片文件
+                // 在此处可以使用axios等方法上传图片
               }
             },
             toolbar: {
