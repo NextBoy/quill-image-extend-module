@@ -108,6 +108,7 @@ export class ImageExtend {
         QuillWatch.emit(this.quill.id, 0)
         const self = this
         e.preventDefault()
+        self.file = e.dataTransfer.files[0]; // 获取到第一个上传的文件对象
         // 如果图片限制大小
         if (self.config.size && self.file.size >= self.config.size * 1024 * 1024) {
             if (self.config.sizeError) {
@@ -115,7 +116,10 @@ export class ImageExtend {
             }
             return
         }
-        self.file = e.dataTransfer.files[0]; // 获取到第一个上传的文件对象
+        // 检查文件类型是否是图片
+        if (!self.file.type.includes('image')){
+            return
+        }
         if (self.config.useCustomUpload && self.config.customUploadHandler) {
             self.config.customUploadHandler(self.file)
         } else if (this.config.action) {
@@ -218,7 +222,7 @@ export class ImageExtend {
      */
     insertImg() {
         const self = QuillWatch.active
-        self.quill.insertEmbed(QuillWatch.active.cursorIndex, 'image', self.imgURL)
+        self.quill.insertEmbed(self.quill.selection.savedRange.index, 'image', self.imgURL)
         self.quill.update()
         self.quill.setSelection(self.cursorIndex+1);
     }

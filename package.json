@@ -1,6 +1,6 @@
 {
   "name": "quill-image-extend-module-enhanced",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "plugin for vue-quill-editor to upload image",
   "main": "index.js",
   "scripts": {

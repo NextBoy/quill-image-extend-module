@@ -90,6 +90,7 @@ export class ImageExtend {
     dropHandle(e) {
         const self = this
         e.preventDefault()
+        self.file = e.dataTransfer.files[0]; // 获取到第一个上传的文件对象
         // 如果图片限制大小
         if (self.config.size && self.file.size >= self.config.size * 1024 * 1024 && self.config.loading) {
             self.quillLoading.classList.add('extend-upload-warning-color')
@@ -101,7 +102,10 @@ export class ImageExtend {
             }, 1500)
             return
         }
-        self.file = e.dataTransfer.files[0]; // 获取到第一个上传的文件对象
+        // 检查文件类型是否是图片
+        if (!self.file.type.includes('image')){
+            return
+        }
         if (this.config.useCustomUpload && this.config.customUploadHandler) {
             this.config.customUploadHandler(this.file)
         } else if (this.config.action) {
@@ -213,7 +217,7 @@ export class ImageExtend {
     insertImg() {
         const self = this
         self.quill.blur()
-        let length = (this.quill.getSelection() || {}).index || this.quill.getLength()
+        let length = (self.quill.getSelection() || {}).index || self.quill.selection.savedRange.index || self.quill.getLength()
         self.quill.insertEmbed(length, 'image', self.imgURL, 'user')
         self.quill.setSelection(length + 1)
     }
