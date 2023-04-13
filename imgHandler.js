@@ -7,6 +7,7 @@ export function imgHandler() {
     if (fileInput === null) {
         fileInput = document.createElement('input');
         fileInput.setAttribute('type', 'file');
+        fileInput.setAttribute('accept', 'image/*');
         fileInput.classList.add('quill-image-input');
         fileInput.style.display = 'none'
         // 监听选择文件
